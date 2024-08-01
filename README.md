@@ -1,12 +1,42 @@
-# Snippet: Wallet Position
+# Snippet: Customizing Wallet Position and Appearance
 
 This snippet demonstrates how to customize the positioning and appearance of a wallet interface using Particle Network's Auth Core Modal.
 
-## Style Settings
+## Configuring the AuthCoreContextProvider
 
-To center the wallet iframe content, add the following CSS:
+To set up the Auth Core Modal, wrap your main component with AuthCoreContextProvider and provide the necessary options:
 
-```css
+```jsx
+<AuthCoreContextProvider
+  options={{
+    projectId: "772f7499-1d2e-40f4-8e2c-7b6dd47db9de",
+    clientKey: "ctWeIc2UBA6sYTKJknT9cu9LBikF00fbk1vmQjsV",
+    appId: "64267c6b-e512-4df2-a7ca-f8b78520a24e",
+    wallet: {
+      visible: true,
+    },
+  }}
+>
+  <Component {...pageProps} />
+</AuthCoreContextProvider>
+```
+
+## visible Parameter Explanation
+
+- **visible: true** - Shows the default wallet icon entry point
+- **visible: false** - Completely disables the wallet entry point
+
+### Note: When set to false, **openWallet** won't work, but you can use **buildWalletUrl** to generate a wallet address and display it in a custom iframe.
+
+## Wallet Centering Methods
+
+### To center the wallet iframe content while keeping the entry point invisible, add this CSS:
+
+``` css
+.particle-pwe-btn {
+  display: none;
+}
+
 .particle-pwe-iframe-content {
   top: 50% !important;
   left: 50% !important;
@@ -14,12 +44,11 @@ To center the wallet iframe content, add the following CSS:
 }
 ```
 
-## Code Example
+## Using the openWallet Function
 
-Here's how to use the openWallet function from the Auth Core Modal:
+### Import and use the openWallet function from Auth Core Modal:
 
-
-```jsx
+```javascript
 import { useAuthCore } from "@particle-network/auth-core-modal";
 
 const { openWallet } = useAuthCore();
@@ -29,3 +58,8 @@ openWallet({
   topMenuType: "close",
 });
 ```
+
+### This code demonstrates how to open the wallet with specific options, such as setting the window size and top menu type.
+
+### By following these steps, you can effectively customize the wallet's position and appearance in your application using Particle Network's Auth Core Modal.
+
